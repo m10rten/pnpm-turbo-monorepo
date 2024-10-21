@@ -1,0 +1,29 @@
+{
+  "name": "@monorepo/db",
+  "scripts": {
+    "gen:sqlite": "prisma generate --schema ./src/prisma/sqlite",
+    "gen:mongo": "prisma generate --schema ./src/prisma/mongo",
+    "db": "pnpm run /^gen:*/",
+    "build": "tsup **/*.ts",
+    "postinstall": "pnpm db"
+  },
+  "type": "module",
+  "devDependencies": {
+    "prisma": "5.21.1"
+  },
+  "dependencies": {
+    "@prisma/client": "5.21.1"
+  },
+  "exports": {
+    "./index": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.ts",
+      "require": "./dist/index.ts"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.ts",
+      "require": "./dist/index.ts"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+model User {
+    id String @id @default(uuid()) @map("_id")
+
+    name  String?
+    email String  @unique
+
+    // todos Todo[]
+
+    createdAt DateTime @default(now())
+
+    @@index([id, email])
+}
+
+model Todo {
+    id String @id @default(uuid()) @map("_id")
+
+    completed Boolean
+    task      String
+
+    // userId String
+
+    // User User @relation(fields: [userId], references: [id])
+}

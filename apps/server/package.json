@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "hono": "4.6.5",
+    "@monorepo/db": "workspace:*",
+    "@monorepo/calculator": "workspace:*",
+    "@monorepo/utils": "workspace:*"
+  },
+  "scripts": {
+    "start": "node dist/main.mjs",
+    "prestart": "pnpm build",
+    "build": "tsup src/**/*.ts"
+  }
+}

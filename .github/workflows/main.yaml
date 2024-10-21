@@ -1,0 +1,32 @@
+concurrency: "1"
+
+name: "Deno CI/CD 🦖🚀"
+
+on:
+  pull_request:
+    branches: [main]
+
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.1
+      - name: Setup Node
+        uses: actions/setup-node@v4.04
+        with:
+          node-version: "22.x"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Test packages and apps
+        run: pnpm test
+
+      - name: Lint packages and apps
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format --check

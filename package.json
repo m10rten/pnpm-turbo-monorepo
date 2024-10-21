@@ -1,0 +1,26 @@
+{
+  "name": "pnpm-matrix-monorepo",
+  "scripts": {
+    "symlinks": "./scripts/create_db_symlinks.sh ../schemas ./packages/db/src/prisma/mongo/schema && ./scripts/create_db_symlinks.sh ../schemas ./packages/db/src/prisma/sqlite/schema",
+    "docker": "docker compose up -d --build --force-recreate --remove-orphans",
+    "exports": "tsx scripts/create_package_exports.ts",
+    "exports:all": "./scripts/all_package_exports.sh packages",
+    "build": "pnpm turbo build",
+    "dev": "pnpm turbo dev"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@monorepo/config": "workspace:*",
+    "@types/jest": "29.5.13",
+    "@types/node": "22.7.7",
+    "eslint": "9.13.0",
+    "jest": "29.7.0",
+    "prettier": "3.3.3",
+    "ts-node": "10.9.2",
+    "tsup": "8.3.0",
+    "tsx": "4.19.1",
+    "turbo": "2.2.2",
+    "typescript": "5.6.3"
+  },
+  "packageManager": "pnpm@9.12.0"
+}

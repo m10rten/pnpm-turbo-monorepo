@@ -1,0 +1,34 @@
+services:
+  server:
+    build:
+      dockerfile: apps/server/Dockerfile
+      context: .
+    ports:
+      - 8000:8000
+    environment:
+      MONGO_URI: mongodb://mongo:27017/monorepo
+      SQLITE_URL: file://./.sqlite.db
+
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    hostname: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+
+  mongo-setup:
+    container_name: mongo_setup
+    image: mongo:latest
+    depends_on:
+      - mongo
+    volumes:
+      - ./scripts:/scripts
+    restart: "no"
+    entrypoint: [ "bash", "/scripts/mongo_setup.sh" ]
+
+volumes:
+  mongo_data: {}

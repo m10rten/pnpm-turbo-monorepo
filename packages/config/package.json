@@ -1,0 +1,8 @@
+{
+  "name": "@monorepo/config",
+  "private": true,
+  "engines": {
+    "node": ">=22.x.x",
+    "npm": ">=8.x.x"
+  }
+}
