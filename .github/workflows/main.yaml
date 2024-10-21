@@ -1,6 +1,6 @@
 concurrency: "1"
 
-name: "Deno CI/CD 🦖🚀"
+name: "Node CI/CD 🦖🚀"
 
 on:
   pull_request:
@@ -20,7 +20,7 @@ jobs:
           node-version: "22.x"
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.15.0
 
       - name: Test packages and apps
         run: pnpm test
