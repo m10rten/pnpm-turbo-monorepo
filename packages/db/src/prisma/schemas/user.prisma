@@ -20,4 +20,6 @@ model Todo {
     // userId String
 
     // User User @relation(fields: [userId], references: [id])
+
+    @@map("todos")
 }
