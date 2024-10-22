@@ -22,6 +22,9 @@ jobs:
         with:
           version: 9.12.0
 
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
       - name: Test packages and apps
         run: pnpm test
 
