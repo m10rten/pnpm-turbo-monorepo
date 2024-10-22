@@ -6,13 +6,26 @@ services:
     ports:
       - 8000:8000
     environment:
-      MONGO_URI: mongodb://mongo:27017/monorepo
-      SQLITE_URL: file://./.sqlite.db
+      MONGO_URI: mongodb://mongodb:27017/monorepo?directConnection=true
+      # SQLITE_URL: file://./.sqlite.db
 
-  mongo:
+      # postgres:
+      #   container_name: postgres
+      #   image: postgres:latest
+      #   hostname: postgres
+      #   ports:
+      #     - 5432:5432
+      #   volumes:
+      #     - postgres_data:/var/lib/postgresql/data
+      #   environment:
+      #     POSTGRES_USER: mono
+      #     POSTGRES_PASSWORD: repo
+      #     POSTGRES_DB: dev
+
+  mongodb:
     container_name: mongo
     image: mongo:latest
-    hostname: mongo
+    hostname: mongodb
     restart: unless-stopped
     ports:
       - 27017:27017
@@ -24,7 +37,7 @@ services:
     container_name: mongo_setup
     image: mongo:latest
     depends_on:
-      - mongo
+      - mongodb
     volumes:
       - ./scripts:/scripts
     restart: "no"
@@ -32,3 +45,4 @@ services:
 
 volumes:
   mongo_data: {}
+  postgres_data: {}

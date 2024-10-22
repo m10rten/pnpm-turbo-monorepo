@@ -1,6 +1,5 @@
 {
   "name": "@monorepo/server",
-  "type": "commonjs",
   "dependencies": {
     "@hono/node-server": "1.13.2",
     "@monorepo/calculator": "workspace:*",
@@ -9,9 +8,8 @@
     "hono": "4.6.5"
   },
   "scripts": {
-    "start": "node dist/main.js",
-    "prestart": "pnpm build",
+    "start": "node dist/server.js",
     "build": "tsup src/**/*.ts src/*.ts --format esm,cjs --dts",
-    "dev": "tsx ./src/main.ts --watch"
+    "dev": "MONGO_URI=mongodb://localhost:27017/monorepo tsx ./src/server.ts --watch"
   }
 }

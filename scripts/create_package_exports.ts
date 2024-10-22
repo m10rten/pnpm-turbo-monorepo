@@ -7,11 +7,11 @@ import * as path from "path";
 const ignoredFolders = ["tests", "node_modules", "dist", "utils"];
 const ignoredFiles = ["esbuild", ".config.ts"];
 
-const extensions = (type: string) => ({
+const extensions = (type: "module" | "commonjs") => ({
   import: type === "module" ? ".js" : ".mjs",
-  types: type === "module" ? ".d.ts" : ".d.ts",
-  require: type === "commonjs" ? ".js" : ".cjs",
-  default: type === "module" ? ".js" : ".mjs",
+  types: type === "module" ? ".d.mts" : ".d.ts",
+  require: type === "module" ? ".cjs" : ".js",
+  default: type === "module" ? ".mjs" : ".js",
 });
 
 function generateExports(
@@ -57,9 +57,12 @@ function generateExports(
         default: `./${filePath}`
           .replace(/\.(js|ts)$/, ext.default)
           .replace("/src", ""),
-        require: `./${filePath}`
-          .replace(/\.(js|ts)$/, ext.require)
-          .replace("/src", ""),
+        require:
+          type === "commonjs"
+            ? `./${filePath}`
+                .replace(/\.(js|ts)$/, ext.require)
+                .replace("/src", "")
+            : undefined,
       };
     }
   });
@@ -93,9 +96,9 @@ function updatePackageJson(folderPath: string): void {
   ) {
     packageJson.exports["."] = {
       types: `./dist/index${ext.types}`,
-      import: `./dist/index${ext.types}`,
-      default: `./dist/index${ext.types}`,
-      require: `./dist/index${ext.require}`,
+      import: `./dist/index${ext.import}`,
+      default: `./dist/index${ext.default}`,
+      require: type === "commonjs" ? `./dist/index${ext.require}` : undefined,
     };
   }
 

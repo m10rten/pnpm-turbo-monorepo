@@ -1,6 +1,7 @@
 generator client_mongo {
     provider        = "prisma-client-js"
     previewFeatures = ["prismaSchemaFolder"]
+    binaryTargets   = ["native", "linux-musl-arm64-openssl-3.0.x"]
     output          = "../../../node_modules/@prisma/mongo-client"
 }
 

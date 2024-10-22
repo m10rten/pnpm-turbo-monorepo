@@ -1,6 +1,5 @@
 {
   "name": "@monorepo/db",
-  "type": "commonjs",
   "scripts": {
     "gen:sqlite": "prisma generate --schema ./src/prisma/sqlite ",
     "gen:mongo": "prisma generate --schema ./src/prisma/mongo",
@@ -19,14 +18,12 @@
     "./index": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.d.ts",
-      "default": "./dist/index.d.ts",
-      "require": "./dist/index.js"
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
     }
   }
 }

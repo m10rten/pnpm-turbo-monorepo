@@ -1,6 +1,5 @@
 {
   "name": "@monorepo/utils",
-  "type": "commonjs",
   "scripts": {
     "build": "tsup --format esm,cjs --dts",
     "dev": "pnpm build  --watch"
@@ -9,20 +8,17 @@
     "./index": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./safetry": {
       "types": "./dist/safetry.d.ts",
       "import": "./dist/safetry.mjs",
-      "default": "./dist/safetry.mjs",
-      "require": "./dist/safetry.js"
+      "default": "./dist/safetry.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.d.ts",
-      "default": "./dist/index.d.ts",
-      "require": "./dist/index.js"
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
     }
   }
 }
