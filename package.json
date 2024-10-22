@@ -9,7 +9,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "dev": "pnpm turbo dev",
-    "clean": "./scripts/clean.sh"
+    "clean": "./scripts/clean.sh",
+    "test": "echo TODO"
   },
   "license": "MIT",
   "devDependencies": {

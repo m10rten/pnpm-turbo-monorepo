@@ -1,6 +1,6 @@
 {
   "name": "@monorepo/server",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@hono/node-server": "1.13.2",
     "@monorepo/calculator": "workspace:*",
