@@ -10,7 +10,8 @@
     "format:check": "prettier --check .",
     "dev": "pnpm turbo dev",
     "clean": "./scripts/clean.sh",
-    "test": "echo TODO"
+    "test": "echo Test todo",
+    "lint": "echo Lint todo"
   },
   "license": "MIT",
   "devDependencies": {
