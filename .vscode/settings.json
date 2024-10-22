@@ -1,4 +1,15 @@
 {
   "prettier.configPath": ".prettierrc.json",
-  "prettier.prettierPath": "node_modules/prettier/index.cjs"
+  "prettier.prettierPath": "node_modules/prettier/index.cjs",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/.turbo": true
+  }
 }
