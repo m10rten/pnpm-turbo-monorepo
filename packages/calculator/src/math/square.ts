@@ -1,4 +1,4 @@
-import { isEmpty } from "@/utils/null.ts";
+import { isEmpty } from "@/utils/null";
 
 export function square(num: number): number {
   if (isEmpty(num)) return -1;

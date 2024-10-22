@@ -1,13 +1,17 @@
 {
+  "name": "@monorepo/server",
+  "type": "module",
   "dependencies": {
-    "hono": "4.6.5",
-    "@monorepo/db": "workspace:*",
+    "@hono/node-server": "1.13.2",
     "@monorepo/calculator": "workspace:*",
-    "@monorepo/utils": "workspace:*"
+    "@monorepo/db": "workspace:*",
+    "@monorepo/utils": "workspace:*",
+    "hono": "4.6.5"
   },
   "scripts": {
-    "start": "node dist/main.mjs",
+    "start": "node dist/main.js",
     "prestart": "pnpm build",
-    "build": "tsup src/**/*.ts"
+    "build": "tsup src/**/*.ts src/*.ts --format esm,cjs --dts",
+    "dev": "tsx ./src/main.ts --watch"
   }
 }

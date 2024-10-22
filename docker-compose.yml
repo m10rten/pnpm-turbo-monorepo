@@ -18,7 +18,7 @@ services:
       - 27017:27017
     volumes:
       - mongo_data:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
 
   mongo-setup:
     container_name: mongo_setup
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./scripts:/scripts
     restart: "no"
-    entrypoint: [ "bash", "/scripts/mongo_setup.sh" ]
+    entrypoint: ["bash", "/scripts/mongo_setup.sh"]
 
 volumes:
   mongo_data: {}

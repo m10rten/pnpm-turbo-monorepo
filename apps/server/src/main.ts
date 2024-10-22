@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { serve } from "@hono/node-server";
 
 import { safetry } from "@monorepo/utils";
 import { createClient } from "@monorepo/db";
@@ -10,7 +11,7 @@ const app = new Hono();
 app.get("/", (c) => c.text("Hello Deno!"));
 
 app.get("/add/:first/:second", (c) =>
-  c.json(add(Number(c.req.param().first), Number(c.req.param().second)))
+  c.json(add(Number(c.req.param().first), Number(c.req.param().second))),
 );
 app.get("/square/:value", (c) => c.json(square(Number(c.req.param().value))));
 
@@ -32,4 +33,7 @@ app.get("/todos/:todoId", async (c) => {
   return c.json({ success: true, result }, 200);
 });
 
-export default app;
+serve({
+  fetch: app.fetch,
+  port: 8000,
+});

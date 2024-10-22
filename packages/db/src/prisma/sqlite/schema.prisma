@@ -1,7 +1,7 @@
 generator client_sqlite {
     provider        = "prisma-client-js"
     previewFeatures = ["prismaSchemaFolder"]
-    output          = "../../node_modules/@prisma/sqlite-client"
+    output          = "../../../node_modules/@prisma/sqlite-client"
 }
 
 datasource sqlite {

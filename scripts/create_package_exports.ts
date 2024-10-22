@@ -5,10 +5,19 @@ import * as path from "path";
 
 // Inline configuration for ignored folders
 const ignoredFolders = ["tests", "node_modules", "dist", "utils"];
+const ignoredFiles = ["esbuild", ".config.ts"];
+
+const extensions = (type: string) => ({
+  import: type === "module" ? ".js" : ".mjs",
+  types: type === "module" ? ".d.ts" : ".d.ts",
+  require: type === "commonjs" ? ".js" : ".cjs",
+  default: type === "module" ? ".js" : ".mjs",
+});
 
 function generateExports(
   folderPath: string,
-  relativePath: string = "."
+  relativePath: string = ".",
+  type: "module" | "commonjs",
 ): Record<string, any> {
   const exports: Record<string, any> = {};
   const files = fs.readdirSync(folderPath);
@@ -23,26 +32,34 @@ function generateExports(
       }
       const subExports = generateExports(
         filePath,
-        path.join(relativePath, file)
+        path.join(relativePath, file),
+        type,
       );
       Object.assign(exports, subExports);
-    } else if (file.endsWith(".js") || file.endsWith(".ts")) {
-      if (file.includes("config")) return;
+    } else if (file.endsWith("js") || file.endsWith("ts")) {
+      if (ignoredFiles.some((ig) => file.includes(ig))) return;
       const exportPath =
         `./${path.join(relativePath, path.parse(file).name)}`.replace(
           "/src",
-          ""
+          "",
         );
+      const ext = extensions(type);
+
+      const filePath = `dist/${path.join(relativePath, file)}`;
       exports[exportPath] = {
-        types:
-          `./dist/${path.join(relativePath, file.replace(/\.(js|ts)$/, ".d.ts"))}`.replace(
-            "/src",
-            ""
-          ),
-        import: `./dist/${path.join(relativePath, file)}`
-          .replace(".js", ".mjs")
+        types: `./${filePath.replace(/\.(js|ts)$/, ext.types)}`.replace(
+          "/src",
+          "",
+        ),
+        import: `./${filePath}`
+          .replace(/\.(js|ts)$/, ext.import)
           .replace("/src", ""),
-        require: `./dist/${path.join(relativePath, file)}`.replace("/src", ""),
+        default: `./${filePath}`
+          .replace(/\.(js|ts)$/, ext.default)
+          .replace("/src", ""),
+        require: `./${filePath}`
+          .replace(/\.(js|ts)$/, ext.require)
+          .replace("/src", ""),
       };
     }
   });
@@ -60,21 +77,25 @@ function updatePackageJson(folderPath: string): void {
     packageJson = JSON.parse(packageJsonContent);
   }
 
+  const type = packageJson.type;
+  const ext = extensions(type);
+
   // Generate exports
-  const generatedExports = generateExports(folderPath);
+  const generatedExports = generateExports(folderPath, ".", type);
 
   // Merge existing exports with generated exports
   packageJson.exports = { ...packageJson.exports, ...generatedExports };
 
   // Add default export if index file exists
   if (
-    fs.existsSync(path.join(folderPath, "index.js")) ||
-    fs.existsSync(path.join(folderPath, "index.ts"))
+    fs.existsSync(path.join(folderPath, "index.ts")) ||
+    fs.existsSync(path.join(folderPath, "src", "index.ts"))
   ) {
     packageJson.exports["."] = {
-      types: "./dist/index.d.ts",
-      import: "./dist/index.mjs",
-      require: "./dist/index.js",
+      types: `./dist/index${ext.types}`,
+      import: `./dist/index${ext.types}`,
+      default: `./dist/index${ext.types}`,
+      require: `./dist/index${ext.require}`,
     };
   }
 

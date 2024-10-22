@@ -1,9 +1,12 @@
 {
   "extends": "@monorepo/config/base.tsconfig.json",
   "compilerOptions": {
+    // "module": "NodeNext",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
+    // "outDir": "dist"
   }
+  // "include": ["src"]
 }

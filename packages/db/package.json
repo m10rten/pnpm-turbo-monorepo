@@ -1,13 +1,14 @@
 {
   "name": "@monorepo/db",
+  "type": "commonjs",
   "scripts": {
-    "gen:sqlite": "prisma generate --schema ./src/prisma/sqlite",
+    "gen:sqlite": "prisma generate --schema ./src/prisma/sqlite ",
     "gen:mongo": "prisma generate --schema ./src/prisma/mongo",
     "db": "pnpm run /^gen:*/",
-    "build": "tsup **/*.ts",
+    "build": "tsup src/**/*.ts src/index.ts --format esm,cjs --dts",
+    "dev": "pnpm build --watch",
     "postinstall": "pnpm db"
   },
-  "type": "module",
   "devDependencies": {
     "prisma": "5.21.1"
   },
@@ -17,13 +18,15 @@
   "exports": {
     "./index": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.ts",
-      "require": "./dist/index.ts"
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.ts",
-      "require": "./dist/index.ts"
+      "import": "./dist/index.d.ts",
+      "default": "./dist/index.d.ts",
+      "require": "./dist/index.js"
     }
   }
 }

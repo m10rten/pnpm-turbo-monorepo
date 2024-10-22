@@ -1,27 +1,33 @@
 {
   "name": "@monorepo/calculator",
+  "type": "commonjs",
   "scripts": {
-    "build": "tsup src/**/*.ts"
+    "build": "tsup src/**/*.ts src/index.ts --format esm,cjs --dts",
+    "dev": "pnpm build --watch"
   },
   "exports": {
     "./index": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.ts",
-      "require": "./dist/index.ts"
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./math/add": {
       "types": "./dist/math/add.d.ts",
-      "import": "./dist/math/add.ts",
-      "require": "./dist/math/add.ts"
+      "import": "./dist/math/add.mjs",
+      "default": "./dist/math/add.mjs",
+      "require": "./dist/math/add.js"
     },
     "./math/square": {
       "types": "./dist/math/square.d.ts",
-      "import": "./dist/math/square.ts",
-      "require": "./dist/math/square.ts"
+      "import": "./dist/math/square.mjs",
+      "default": "./dist/math/square.mjs",
+      "require": "./dist/math/square.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.d.ts",
+      "default": "./dist/index.d.ts",
       "require": "./dist/index.js"
     }
   },
