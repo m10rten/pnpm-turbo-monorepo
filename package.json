@@ -10,6 +10,7 @@
     "format:check": "prettier --check .",
     "dev": "pnpm turbo dev",
     "clean": "./scripts/clean.sh",
+    "prisma:copy-engine": "ls ./scripts -l && ./scripts/db_copy_prisma_engine.sh",
     "test": "echo Test todo",
     "lint": "echo Lint todo"
   },
@@ -25,10 +26,11 @@
     "tsup": "8.3.0",
     "tsx": "4.19.1",
     "turbo": "2.2.2",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "rimraf": "6.0.1"
   },
   "packageManager": "pnpm@9.12.0",
-  "dependencies": {
-    "rimraf": "6.0.1"
+  "engines": {
+    "node": ">=22.x.x"
   }
 }

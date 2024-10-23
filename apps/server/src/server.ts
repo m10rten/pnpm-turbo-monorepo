@@ -24,9 +24,18 @@ app.post("/todos", async (c) => {
   return c.json({ success: true, data }, 201);
 });
 
+app.get("/todos", async (c) => {
+  const result = await safetry(client.todo.findMany());
+  if (!result.success) {
+    return c.json({ error: result.error }, 500);
+  }
+  return c.json({ success: true, result }, 201);
+});
+
 app.get("/todos/:todoId", async (c) => {
   const id = c.req.param().todoId;
-  const result = await safetry(client.todo.findFirst({ where: { id } }));
+  console.log(id);
+  const result = await safetry(client.todo.findFirst({ where: { id: id } }));
   if (!result.success) {
     return c.json({ error: result.error }, 500);
   }
