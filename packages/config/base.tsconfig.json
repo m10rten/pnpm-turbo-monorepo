@@ -20,7 +20,8 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "removeComments": true
   },
   "exclude": ["node_modules", "dist"]
 }

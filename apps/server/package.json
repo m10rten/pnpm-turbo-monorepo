@@ -2,9 +2,9 @@
   "name": "@monorepo/server",
   "dependencies": {
     "@hono/node-server": "1.13.2",
-    "@monorepo/calculator": "workspace:*",
     "@monorepo/db": "workspace:*",
     "@monorepo/utils": "workspace:*",
+    "@monorepo/calculator": "workspace:*",
     "hono": "4.6.5"
   },
   "scripts": {
