@@ -70,6 +70,12 @@ COPY --from=packager /tmp/packages/ /repo/packages/
 # Clean up temporary files
 RUN rm -rf /tmp/workspace_deps.txt /tmp/packages
 
+# Remove src directories, Markdown files, and Dockerfiles
+RUN find . -type d -name "src" -exec rm -rf {} + \
+    && find . -type f -name "*.md" -exec rm -f {} + \
+    && find . -type f -name "Dockerfile" -exec rm -f {} +
+
+
 WORKDIR /repo/apps/server
 
 EXPOSE 8000
