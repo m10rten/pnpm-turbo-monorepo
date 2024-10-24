@@ -39,21 +39,20 @@ RUN mkdir -p ${DEST_FOLDER}
 RUN cp ${ENGINE_FILE} ${DEST_FOLDER}
 
 
-FROM base AS packager
-WORKDIR /repo
+# FROM build AS packager
+# WORKDIR /repo
 
-# Step 1: Extract package names and prepare files
-RUN set -e; \
-    grep -E '"workspace:.*"' apps/server/package.json | sed -E 's/.*"@monorepo\/([^"]+)": "workspace:.*/\1/' > /tmp/workspace_deps.txt && \
-    mkdir -p /tmp/packages && \
-    while IFS= read -r pkg; do \
-    mkdir -p /tmp/packages/$pkg; \
-    # Check and copy dist, node_modules, and package.json only if they exist
-    cp -R packages/$pkg/dist/* /tmp/packages/$pkg/dist/ || true; \
-    cp -R packages/$pkg/node_modules/* /tmp/packages/$pkg/node_modules/ || true; \
-    cp packages/$pkg/package.json /tmp/packages/$pkg/ || true; \
-    done < /tmp/workspace_deps.txt
-
+# # Extract package names and prepare files
+# RUN set -e; \
+#     grep -E '"workspace:.*"' apps/server/package.json | sed -E 's/.*"@monorepo\/([^"]+)": "workspace:.*/\1/' > /repo/workspace_deps.txt && \
+#     mkdir -p /repo/packages && \
+#     while IFS= read -r pkg; do \
+#     mkdir -p /repo/packages/$pkg; \
+#     # Check and copy dist, node_modules, and package.json only if they exist
+#     cp -R packages/$pkg/dist/* /repo/packages/$pkg/dist/ || true; \
+#     cp -R packages/$pkg/node_modules/* /repo/packages/$pkg/node_modules/ || true; \
+#     cp packages/$pkg/package.json /repo/packages/$pkg/ || true; \
+#     done < /repo/workspace_deps.txt
 
 FROM base AS runner
 WORKDIR /repo
@@ -66,15 +65,14 @@ COPY --from=build /repo/apps/server/node_modules/ /repo/apps/server/node_modules
 COPY --from=build /repo/apps/server/package.json  /repo/apps/server/package.json
 
 # Step 2: Copy the prepared files
-COPY --from=packager /tmp/packages/ /repo/packages/
-# Clean up temporary files
-RUN rm -rf /tmp/workspace_deps.txt /tmp/packages
-
+# COPY --from=packager /tmp/packages/ /repo/packages/
+# RUN rm -rf /tmp/workspace_deps.txt /tmp/packages
 # Remove src directories, Markdown files, and Dockerfiles
 RUN find . -type d -name "src" -exec rm -rf {} + \
     && find . -type f -name "*.md" -exec rm -f {} + \
     && find . -type f -name "Dockerfile" -exec rm -f {} +
-
+# Clean up temporary files
+RUN rm -rf /repo/workspace_deps.txt
 
 WORKDIR /repo/apps/server
 
